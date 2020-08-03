@@ -18,7 +18,7 @@ public class Game {
         UI.welcomePlayer(player);
 
         while(true){
-            UI.println("RODADA: " + round);
+            UI.println("RODADA: " + (round + 1));
             UI.newLine();
 
             word.printSecretWord();
@@ -26,6 +26,7 @@ public class Game {
             UI.newLine();
 
             this.inputChar();
+            round += 1;
         }
 
     }
@@ -46,8 +47,12 @@ public class Game {
         char c;
 
         while(true){
+            this.isWinner();
+            this.isLoser();
+
             UI.print("Digite um caracter: ");
             c = UI.readChar();
+            UI.newLine();
 
             try {
                 if(!word.inputChar(c)){
@@ -66,4 +71,31 @@ public class Game {
         }
 
     }
+
+    private boolean isWinner(){
+        if(this.word.isOriginalWord()){
+            UI.newLine();
+            UI.println("Parabéns! O jogador " + this.player.getName() + " acertou a palavra!");
+            UI.print("A palavra secreta é ");
+            word.printOriginalWord();
+
+            return true;
+        }
+
+        return  false;
+    }
+
+    private boolean isLoser(){
+        if(this.attempts == 0){
+            UI.newLine();
+            UI.println("Você perdeu! Tente novamente");
+            UI.print("A palavra secreta é ");
+            word.printOriginalWord();
+
+            return true;
+        }
+
+        return false;
+    }
+
 }

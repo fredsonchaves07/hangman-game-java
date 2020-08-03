@@ -48,6 +48,10 @@ public class Word {
         }
     }
 
+    public void printOriginalWord(){
+        UI.println(this.originalWord);
+    }
+
     public boolean inputChar(char c) throws InvalidCharacterException{
         if(this.secretWord.contains(String.valueOf(c))){
             throw new InvalidCharacterException("O caracter já foi digitado!");
@@ -57,10 +61,12 @@ public class Word {
             char[] chars = this.secretWord.toCharArray();
 
             for(int i = 0; i < this.originalWord.length(); i ++){
-                if((String.valueOf(this.originalWord.charAt(i)).equals(String.valueOf(c)))){
+                if((String.valueOf(this.originalWord.charAt(i)).equals(String.valueOf(c).toUpperCase()))){
                     chars[i] = c;
                 }
             }
+
+            this.secretWord = new String(chars).toUpperCase();
 
             return true;
         }
@@ -69,14 +75,10 @@ public class Word {
     }
 
     private boolean containsChar(char c){
-        char[] chars = this.originalWord.toCharArray();
+        return this.originalWord.contains(String.valueOf(c).toUpperCase());
+    }
 
-        for(int i = 0; i < this.originalWord.length(); i++){
-            if(this.originalWord.contains(String.valueOf(chars[i]))){
-                return true;
-            }
-        }
-
-        return false;
+    public boolean isOriginalWord(){
+        return this.secretWord.equals(this.originalWord);
     }
 }
