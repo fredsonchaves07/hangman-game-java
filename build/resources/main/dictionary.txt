@@ -1,1 +1,4 @@
-Fredson
+javascript
+python
+java
+sql

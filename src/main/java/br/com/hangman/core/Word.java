@@ -53,6 +53,9 @@ public class Word {
     }
 
     public boolean inputChar(char c) throws InvalidCharacterException{
+        if(Character.isDigit(c)){
+            throw new InvalidCharacterException("Não é permitido digitar números");
+        }
         if(this.secretWord.contains(String.valueOf(c))){
             throw new InvalidCharacterException("O caracter já foi digitado!");
         }

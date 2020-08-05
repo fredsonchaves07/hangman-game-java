@@ -17,7 +17,7 @@ public class Game {
         this.createWord();
         UI.welcomePlayer(player);
 
-        while(true){
+        while(!this.isWinner() &&  !this.isLoser()){
             UI.println("RODADA: " + (round + 1));
             UI.newLine();
 
@@ -32,11 +32,22 @@ public class Game {
     }
 
     private void createPlayer(){
-        String name;
-        UI.print("Digite o nome do jogador: ");
-        name = UI.readString();
+        while(true){
+            try{
+                String name;
+                UI.print("Digite o nome do jogador: ");
+                name = UI.readString();
 
-        this.player = new Player(name);
+                this.player = new Player(name);
+
+            }catch (InvalidCharacterException e){
+                UI.println("[ERRO]: " + e.getMessage());
+                continue;
+            }
+
+            break;
+        }
+
     }
 
     private void createWord(){
@@ -47,9 +58,6 @@ public class Game {
         char c;
 
         while(true){
-            this.isWinner();
-            this.isLoser();
-
             UI.print("Digite um caracter: ");
             c = UI.readChar();
             UI.newLine();
@@ -59,8 +67,6 @@ public class Game {
                     UI.println("O caracter não pertence a palavra");
                     this.attempts -= 1;
                     UI.println("Você ainda tem " + this.attempts + " tentativas");
-                } else {
-                    UI.println("Parabéns!! Você acertou");
                 }
             } catch (InvalidCharacterException e ){
                 UI.println("[ERRO]: " + e.getMessage());
